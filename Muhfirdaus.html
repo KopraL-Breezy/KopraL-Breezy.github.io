@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Registrasi - Kurir - Pelanggan</title>
+<style>
+:root { --font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", sans-serif; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: var(--font); 
+background-image: url('https://i.ibb.co.com/MyBTbYq3/5ea3c2a196f4cf9f60b746a54af1ad26.jpg'); 
+background-size: cover; background-position: center; overflow: hidden; }
+
+.marquee { width:100%; overflow:hidden; white-space:nowrap; color:white; font-weight:bold; font-size:1.2rem; padding:10px 0 0; position:fixed; top:0; left:0; z-index:10; text-shadow:2px 2px 4px rgba(0,0,0,0.6); text-align:center; }
+.marquee span { display:inline-block; padding-left:100%; animation:marquee 10s linear infinite; }
+@keyframes marquee { 0%{transform:translateX(0);} 100%{transform:translateX(-100%);} }
+
+.services-container { position:fixed; top:35px; left:0; width:100%; z-index:9; text-align:center; }
+.time-display { color:white; font-weight:bold; font-size:1rem; text-align:center; margin-bottom:5px; text-shadow:2px 2px 4px rgba(0,0,0,0.6); }
+.services { color:#ffffff; font-size:0.95rem; text-align:center; margin-top:5px; white-space:pre-line; }
+
+.wrap { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:12px; z-index:5; }
+.item { padding:8px 12px; background:rgba(59,130,246,0.85); color:white; border-radius:8px; box-shadow:0 2px 6px rgba(15,23,42,0.2); font-size:1rem; font-weight:600; text-align:center; width:180px; cursor:pointer; }
+
+.form-container { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); flex-direction:column; gap:10px; background:rgba(0,0,0,0.85); padding:25px; border-radius:10px; color:white; width:320px; box-shadow:0 4px 12px rgba(0,0,0,0.5); z-index:20; }
+.form-container input, .form-container select { padding:10px; border-radius:5px; border:none; outline:none; font-size:1rem; }
+.form-container button { padding:10px; border:none; border-radius:5px; background:#3b82f6; color:white; font-weight:bold; cursor:pointer; font-size:1rem; }
+.form-container h2 { text-align:center; margin-bottom:15px; color:#3b82f6; }
+.toggle-pass { font-size:0.9rem; color:#3b82f6; cursor:pointer; text-align:right; margin-top:-8px; margin-bottom:8px; }
+</style>
+</head>
+<body>
+
+<div class="marquee" id="marquee">
+  <span>𝐌𝐔𝐇. 𝐅𝐈𝐑𝐃𝐀𝐔𝐒 𝐊𝐔𝐑𝐈𝐑 𝐌𝐀𝐏𝐏𝐀𝐓𝐀𝐍𝐃𝐀'</span>
+</div>
+
+<div class="services-container">
+  <div class="time-display" id="timeDisplay"></div>
+  <div class="services">
+M e l a y a n i :
+Pengantaran Barang & Makanan
+Pengantaran Dokumen Penting
+Belanja Di Toko & Pasar
+Mulai Jam 7:00 - 23:00
+Dana/Gopay/ShopeePay (083137190399)
+
+𝑲𝑶𝑻𝑨 𝑷𝑶𝑳𝑴𝑨𝑵 &
+𝑺𝑬𝑲𝑰𝑻𝑨𝑹𝑵𝒀𝑨 - 𝑾𝑶𝑵𝑶𝑴𝑼𝑳𝒀𝑶
+  </div>
+</div>
+
+<main class="wrap" id="mainContent">
+  <div class="item" id="btnRegistrasi">Registrasi</div>
+  <div class="item" id="btnKurir">Login Kurir</div>
+  <div class="item" id="btnPelanggan">Check Kurir</div>
+</main>
+
+<!-- Form Registrasi -->
+<div class="form-container" id="formRegistrasi">
+  <h2>Buat Akun Baru</h2>
+  <input type="text" id="email" placeholder="Email / Nomor Tlp" />
+  <input type="password" id="password" placeholder="Masukkan Password" />
+  <input type="password" id="konfirmasi" placeholder="Konfirmasi Password" />
+  <input type="text" id="kode" placeholder="Kode Akses" />
+  <button id="daftar">Buat Akun</button>
+  <button id="tutupReg" style="background:#ef4444; margin-top:10px;">Tutup</button>
+</div>
+
+<!-- Form Login Kurir -->
+<div class="form-container" id="formLogin">
+  <h2>Login Kurir</h2>
+  <input type="text" id="loginEmail" placeholder="Email / Nomor Tlp" />
+  <input type="password" id="loginPassword" placeholder="Password" />
+  <div class="toggle-pass" id="toggleLoginPass">👁️</div>
+  <button id="btnLoginSubmit">Login</button>
+  <button id="tutupLogin" style="background:#ef4444; margin-top:10px;">Tutup</button>
+</div>
+
+<!-- Form Bio Data -->
+<div class="form-container" id="formBio" style="width:320px;">
+  <h2>Isi Bio Data</h2>
+  <input type="file" id="foto" accept="image/*" />
+  <input type="text" id="nama" placeholder="Nama" />
+  <input type="text" id="nomor" placeholder="Nomor HP" />
+  <input type="text" id="lokasi" placeholder="Lokasi" />
+  <select id="status">
+    <option value="ON">ON</option>
+    <option value="OFF">OFF</option>
+  </select>
+  <button id="simpanBio">Simpan Bio Data</button>
+</div>
+
+<script>
+// --- Marquee hanya muncul sekali ---
+const marquee = document.getElementById('marquee');
+if(sessionStorage.getItem('marqueeShown')){
+  marquee.style.display = 'none';
+} else {
+  marquee.style.display = 'block';
+  sessionStorage.setItem('marqueeShown','true');
+  setTimeout(()=>{ marquee.style.display = 'none'; }, 10000);
+}
+
+// --- Update Jam & Tanggal ---
+function updateTime() {
+  const now = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const dateString = now.toLocaleDateString('id-ID', options);
+  const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute:'2-digit', second:'2-digit', hour12: true });
+  document.getElementById('timeDisplay').textContent = `${dateString} | ${timeString}`;
+}
+updateTime();
+setInterval(updateTime, 1000);
+
+// --- Variabel Form & Button ---
+const btnReg = document.getElementById('btnRegistrasi');
+const formReg = document.getElementById('formRegistrasi');
+const btnDaftar = document.getElementById('daftar');
+const tutupReg = document.getElementById('tutupReg');
+
+const btnKurir = document.getElementById('btnKurir');
+const formLogin = document.getElementById('formLogin');
+const btnLoginSubmit = document.getElementById('btnLoginSubmit');
+const toggleLoginPass = document.getElementById('toggleLoginPass');
+const tutupLogin = document.getElementById('tutupLogin');
+
+const btnPelanggan = document.getElementById('btnPelanggan');
+const formBio = document.getElementById('formBio');
+const simpanBioBtn = document.getElementById('simpanBio');
+
+// --- Simpan Akun ---
+function simpanAkun(email, password) {
+  let akun = JSON.parse(localStorage.getItem("akunKurir")) || [];
+  if(!akun.some(a => a.email === email)){
+    akun.push({ email, password });
+    localStorage.setItem("akunKurir", JSON.stringify(akun));
+  }
+}
+
+// --- Event Listener Form Registrasi ---
+btnReg.addEventListener('click', () => { formReg.style.display = 'flex'; });
+tutupReg.addEventListener('click', () => { formReg.style.display = 'none'; });
+
+btnDaftar.addEventListener('click', () => {
+  const email = document.getElementById('email').value.trim();
+  const pass = document.getElementById('password').value;
+  const konfirmasi = document.getElementById('konfirmasi').value;
+  const kode = document.getElementById('kode').value.trim();
+  if(!email || !pass || !konfirmasi || !kode){ alert("Harap isi semua data!"); return; }
+  if(pass !== konfirmasi){ alert("Konfirmasi password tidak cocok!"); return; }
+  if(kode !== "252556"){ alert("Kode akses salah! Registrasi dibatalkan."); return; }
+  simpanAkun(email, pass);
+  alert("Akun berhasil dibuat!\nEmail/Nomor: " + email);
+  formReg.style.display = 'none';
+});
+
+// --- Login Kurir ---
+btnKurir.addEventListener('click', () => {
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('loginPassword').value = '';
+  formLogin.style.display = 'flex';
+});
+
+tutupLogin.addEventListener('click', () => { formLogin.style.display = 'none'; });
+
+toggleLoginPass.addEventListener('click', () => {
+  const inputPass = document.getElementById('loginPassword');
+  inputPass.type = inputPass.type === "password" ? "text" : "password";
+});
+
+btnLoginSubmit.addEventListener('click', () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value;
+  if(!email || !pass){ alert("Harap isi semua data!"); return; }
+  let akun = JSON.parse(localStorage.getItem("akunKurir")) || [];
+  let login = akun.find(a => a.email === email && a.password === pass);
+  if(login){
+    alert("Login berhasil!");
+    formLogin.style.display = 'none';
+    sessionStorage.setItem("loginEmail", email);
+
+    formBio.style.width = "280px";
+    formBio.querySelector('h2').style.fontSize = "1.6rem";
+    Array.from(formBio.querySelectorAll('input, select, button')).forEach(el=>el.style.fontSize="0.95rem");
+
+    document.getElementById('nama').value = login.nama || '';
+    document.getElementById('nomor').value = login.nomor || '';
+    document.getElementById('lokasi').value = login.lokasi || '';
+    document.getElementById('status').value = login.status || 'Off';
+    formBio.style.display = 'flex';
+  } else { alert("Email/Nomor atau Password salah!"); }
+});
+
+// --- Simpan Bio Data ---
+simpanBioBtn.addEventListener('click', () => {
+  const fotoFile = document.getElementById('foto').files[0];
+  const nama = document.getElementById('nama').value.trim();
+  const nomor = document.getElementById('nomor').value.trim();
+  const lokasi = document.getElementById('lokasi').value.trim();
+  const status = document.getElementById('status').value;
+  const emailLogin = sessionStorage.getItem("loginEmail");
+  if(!emailLogin){ alert("Error!"); return; }
+  let akun = JSON.parse(localStorage.getItem("akunKurir")) || [];
+  let idx = akun.findIndex(a => a.email === emailLogin);
+  if(idx >=0){
+    akun[idx].nama = nama;
+    akun[idx].nomor = nomor;
+    akun[idx].lokasi = lokasi;
+    akun[idx].status = status;
+    if(fotoFile){
+      const reader = new FileReader();
+      reader.onload = function(e){
+        akun[idx].foto = e.target.result;
+        localStorage.setItem("akunKurir", JSON.stringify(akun));
+        alert("Bio Data tersimpan!");
+        formBio.style.display = 'none';
+      }
+      reader.readAsDataURL(fotoFile);
+    } else {
+      localStorage.setItem("akunKurir", JSON.stringify(akun));
+      alert("Bio Data tersimpan!");
+      formBio.style.display = 'none';
+    }
+  }
+});
+
+// --- Tampilkan daftar kurir ---
+btnPelanggan.addEventListener('click', () => {
+  const win = window.open('', '_blank');
+  const akun = JSON.parse(localStorage.getItem("akunKurir")) || [];
+  win.document.write(`
+  <html><head>
+    <title>Daftar Kurir</title>
+    <style>
+      body{font-family:Arial,sans-serif;background:#111;color:#fff;display:flex;flex-direction:column;align-items:center;padding:40px;}
+      body *{-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}
+      h2{color:#3b82f6;margin-bottom:50px;font-size:3.5rem;text-align:center;}
+      .kurir{width:95%;max-width:800px;margin-bottom:30px;display:flex;gap:40px;align-items:center;padding:40px;background:rgba(59,130,246,0.6);border-radius:25px;box-shadow:0 5px 20px rgba(0,0,0,0.6);}
+      .kurir img{width:200px;height:200px;border-radius:50%;object-fit:cover;border:5px solid #3b82f6; pointer-events:none; user-select:none;}
+      .kurir-info{font-size:2.8rem; line-height:3.5rem;}
+      .kurir-info strong{font-size:3rem;color:#fff;}
+      .btn-chat, .btn-tutup{
+        display:inline-block;
+        padding:30px 50px;
+        margin-top:25px;
+        margin-bottom:25px;
+        font-weight:bold;
+        cursor:pointer;
+        border:none;
+        border-radius:20px;
+        font-size:2rem;
+        text-align:center;
+        text-decoration:none;
+      }
+      .btn-chat{ background:#10b981; color:white; }
+      .btn-tutup{ background:#ef4444; color:white; }
+    </style>
+  </head>
+  <body oncontextmenu="return false;">
+    <h2>𝐃𝐀𝐅𝐓𝐀𝐑 𝐊𝐔𝐑𝐈𝐑</h2>
+    ${akun.length===0?'<div style="font-size:2.5rem;">Tidak ada kurir terdaftar</div>':akun.map(a=>`
+      <div class="kurir">
+        <img src="${a.foto||''}" alt="Foto" draggable="false">
+        <div class="kurir-info">
+          <strong>Nama:</strong> ${a.nama||'-'}<br>
+          <strong>Nomor:</strong> ${a.nomor||'-'}<br>
+          <strong>Lokasi:</strong> ${a.lokasi||'-'}<br>
+          <strong>Status:</strong> ${a.status||'Off'}
+        </div>
+      </div>`).join('')}
+    <a href="https://wa.me/6283137190399" target="_blank" class="btn-chat">💬 𝗛𝗨𝗕𝗨𝗡𝗚𝗜 𝗞𝗨𝗥𝗜𝗥</a>
+    <button class="btn-tutup" onclick="window.close()">𝗞𝗘𝗠𝗕𝗔𝗟𝗜</button>
+  </body></html>
+  `);
+});
+</script>
+</body>
+</html>
